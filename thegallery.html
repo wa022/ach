@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>vCard - Personal Portfolio</title>
+
+  <!-- favicon -->
+  <link rel="shortcut icon" href="https://codewithsadee.github.io/vcard-personal-portfolio/assets/images/logo.ico" type="image/x-icon">
+
+  <!-- custom css link -->
+  <link rel="stylesheet" href="https://codewithsadee.github.io/vcard-personal-portfolio/assets/css/style.css">
+
+  <!-- google font link -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+  <!-- MAIN -->
+
+  <main>
+
+    <!-- SIDEBAR -->
+
+    <aside class="sidebar" data-sidebar>
+
+      <div class="sidebar-info">
+
+        <figure class="avatar-box">
+          <img src="https://codewithsadee.github.io/vcard-personal-portfolio/assets/ach.png" alt="ACH Dev" width="80">
+        </figure>
+
+        <div class="info-content">
+          <h1 class="name" title="Richard hanrick">ACH Dev</h1>
+          <p class="title">Graphic designer</p>
+        </div>
+
+        <button class="info_more-btn" data-sidebar-btn>
+          <span>Show mail Contact</span>
+          <ion-icon name="chevron-down"></ion-icon>
+        </button>
+
+      </div>
+
+      <div class="sidebar-info_more">
+
+        <div class="separator"></div>
+
+        <ul class="contacts-list">
+
+          <li class="contact-item">
+            <div class="icon-box">
+              <ion-icon name="mail-outline"></ion-icon>
+            </div>
+            <div class="contact-info">
+              <p class="contact-title">Email</p>
+              <a href="mailto:achdev.contact@gmail.com" class="contact-link">achdev.contact@gmail.com</a>
+            </div>
+          </li>
+
+        </ul>
+
+        <div class="separator"></div>
+
+        <ul class="social-list">
+          <li class="social-item">
+            <a href="https://www.instagram.com/ach_digitalart/" class="social-link">
+              <ion-icon name="logo-instagram"></ion-icon>
+            </a>
+          </li>
+        </ul>
+
+      </div>
+
+    </aside>
+
+    <!-- main-content -->
+
+    <div class="main-content">
+
+      <!-- NAVBAR -->
+
+      <nav class="navbar">
+        <ul class="navbar-list">
+          <li class="navbar-item">
+            <button class="navbar-link" data-nav-link>Portrait On Demand</button>
+          </li>
+          <li class="navbar-item">
+            <button class="navbar-link" data-nav-link>About</button>
+          </li>
+          <li class="navbar-item">
+            <button class="navbar-link active" data-nav-link>The Gallery</button>
+          </li>
+          <li class="navbar-item">
+            <button class="navbar-link" data-nav-link>order status</button>
+          </li>
+        </ul>
+      </nav>
+
+      <!-- PORTFOLIO -->
+
+      <article style="color: var(--white-2);" class="portfolio active" data-page="the gallery">
+        <header>
+          <h2 class="h2 article-title">The Gallery</h2>
+        </header>
+        <section class="projects">
+          <ul class="project-list" id="project-list">
+            <!-- Dynamic content will be filled here -->
+          </ul>
+        </section>
+        <!-- Loader Image -->
+        <div class="article-loader">
+          <div class="loader-image"></div>
+        </div>
+      </article>
+
+      <style>
+        .portfolio {
+          position: relative;
+          overflow: hidden;
+        }
+
+        .project-img {
+          position: relative;
+          width: 100%;
+          height: 0;
+          padding-bottom: 100%;
+          overflow: hidden;
+          transition: transform 0.3s ease;
+        }
+
+        .project-img img {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+
+        .project-img:hover img {
+          transform: scale(1.1);
+        }
+
+        .article-loader {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background-color: hsl(240, 2%, 13%); /* Semi-transparent background color */
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
+
+        .loader-image {
+          width: 50px;
+          height: 50px;
+          background-image: url('https://kimos998.github.io/senddrawinghom/assets/reload.png'); /* Set the path to your loader image */
+          background-size: cover;
+          animation: rotate 1s linear infinite; /* تحديد دوران سلس لمدة 1 ثانية بشكل متكرر */
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg); /* زاوية البداية للدوران (0 درجة) */
+  }
+  to {
+    transform: rotate(360deg); /* زاوية النهاية للدوران (360 درجة) */
+  }
+}
+      </style>
+
+      <script>
+        document.addEventListener("DOMContentLoaded", function() {
+          const navLinks = document.querySelectorAll('.navbar-link');
+          navLinks.forEach(link => {
+            link.addEventListener('click', function() {
+              const activeLink = document.querySelector('.navbar-link.active');
+              if (activeLink) {
+                activeLink.classList.remove('active');
+              }
+              this.classList.add('active');
+              const pageName = this.textContent.toLowerCase().replace(/\s/g, '');
+              const pageURL = `/senddrawinghom/${pageName}.html`;
+              window.location.href = pageURL;
+            });
+          });
+        });
+
+
+        async function fetchGalleryData() {
+          const url = 'https://sheets.googleapis.com/v4/spreadsheets/16nsDPICu5mqT6CMtadaO47P7w0QY2cf-HpfsYtBxvcg/values/Gallery!A1:I100?key=AIzaSyB5WTjIR5OZt108xl9uQApzeoNRWuMyYRE';
+          const response = await fetch(url);
+          const data = await response.json();
+          return data.values;
+        }
+
+        function createProjectItem(imageUrl, characterName) {
+          const li = document.createElement('li');
+          li.className = 'project-item active';
+          li.setAttribute('data-filter-item', '');
+          li.setAttribute('data-category', 'artwork');
+
+          const figure = document.createElement('figure');
+          figure.className = 'project-img';
+
+          const img = document.createElement('img');
+          img.src = imageUrl;
+          img.alt = characterName;
+          img.loading = 'lazy';
+          img.style.objectFit = 'cover';
+
+          figure.appendChild(img);
+
+          const h3 = document.createElement('h3');
+          h3.className = 'project-title';
+          h3.textContent = characterName;
+
+          li.appendChild(figure);
+          li.appendChild(h3);
+
+          return li
+        }
+
+        async function populateGallery() {
+          const projectList = document.getElementById('project-list');
+          const galleryData = await fetchGalleryData();
+
+          galleryData.slice(1).forEach(row => {
+            const imageUrl = row[0];
+            const characterName = row[1];
+            const projectItem = createProjectItem(imageUrl, characterName);
+            projectList.appendChild(projectItem);
+          });
+
+          // Remove loader when data is loaded
+          const loader = document.querySelector('.article-loader');
+          if (loader) {
+            loader.remove();
+          }
+        }
+
+        populateGallery();
+      </script>
+
+    </div>
+
+  </main>
+
+  <!-- js nav bar to change -->
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      const navLinks = document.querySelectorAll('.navbar-link');
+      navLinks.forEach(link => {
+        link.addEventListener('click', function() {
+          const activeLink = document.querySelector('.navbar-link.active');
+          if (activeLink) {
+            activeLink.classList.remove('active');
+          }
+          this.classList.add('active');
+          const pageName = this.textContent.toLowerCase().replace(/\s/g, '');
+          const pageURL = `/senddrawinghom/${pageName}.html`;
+          window.location.href = pageURL;
+        });
+      });
+    });
+  </script>
+
+  <!-- custom js link -->
+  <script src="https://codewithsadee.github.io/vcard-personal-portfolio/assets/js/script.js"></script>
+  <!-- ionicon link -->
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+</body>
+
+</html>
